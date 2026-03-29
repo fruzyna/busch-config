@@ -44,15 +44,6 @@ services:
       - ${PERSONAL_PORT}:8000
     restart: always
 
-  races:
-    image: ${MY_REGISTRY}/races
-    container_name: races
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - ${RACES_PORT}:8000
-    restart: always
-
   wildrank:
     image: ${WS_REGISTRY}/wildrank:4.1.4
     container_name: wildrank
