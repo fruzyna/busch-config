@@ -4,6 +4,50 @@ include:
 
 services:
 
+  ddclient-fruzyna:
+    image: ${LSIO_REGISTRY}/ddclient
+    container_name: ddclient-fruzyna
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${USER_ID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/ddclient/fruzyna:/config:Z
+    restart: always
+
+  ddclient-wildrank:
+    image: ${LSIO_REGISTRY}/ddclient
+    container_name: ddclient-wildrank
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${USER_ID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/ddclient/wildrank:/config:Z
+    restart: always
+
+  ddclient-wildzone:
+    image: ${LSIO_REGISTRY}/ddclient
+    container_name: ddclient-wildzone
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${USER_ID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/ddclient/wildzone:/config:Z
+    restart: always
+
+  ddclient-wildstang:
+    image: ${LSIO_REGISTRY}/ddclient
+    container_name: ddclient-wildstang
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${USER_ID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_DIR}/ddclient/wildstang:/config:Z
+    restart: always
+
   reverse-proxy:
     image: ${LSIO_REGISTRY}/swag
     container_name: reverse-proxy
