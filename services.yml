@@ -23,6 +23,19 @@ services:
       - ${GITEA_PORT}:3000
     restart: always
 
+  librespeed:
+    image: ${LSIO_REGISTRY}/librespeed
+    container_name: librespeed
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Chicago
+    volumes:
+      - ${CONFIG_DIR}/librespeed:/config:Z
+    ports:
+      - ${SPEED_PORT}:80
+    restart: always
+
   miniflux-app:
     image: docker.io/miniflux/miniflux
     container_name: miniflux-app
