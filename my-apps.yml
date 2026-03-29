@@ -45,7 +45,7 @@ services:
     restart: always
 
   wildrank:
-    image: ${WS_REGISTRY}/wildrank:4.1.4
+    image: ${WS_REGISTRY}/wildrank:5.1.4
     container_name: wildrank
     env_file: secrets/wildrank.env
     environment:
@@ -57,7 +57,7 @@ services:
     restart: always
 
   wildrank-test:
-    image: ${WS_REGISTRY}/wildrank:4.1.4
+    image: ${WS_REGISTRY}/wildrank:5.1.4
     container_name: wildrank-test
     env_file: secrets/wildrank.env
     environment:
@@ -69,7 +69,7 @@ services:
     restart: always
 
   wildrank-dev:
-    image: ${WS_REGISTRY}/wildrank:250725-r2oc
+    image: ${WS_REGISTRY}/wildrank:5.1.4
     container_name: wildrank-dev
     env_file: secrets/wildrank.env
     environment:
