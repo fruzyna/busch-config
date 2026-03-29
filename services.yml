@@ -62,12 +62,10 @@ services:
     restart: always
 
   wiki:
-    build: ./mkdocs
+    image: docker.io/redimp/otterwiki:2
     container_name: wiki
     volumes:
-      - ${CONFIG_DIR}/wiki/mkdocs.yml:/docs/mkdocs.yml:Z
-      - ${LIAM_DIR}/Wiki:/docs/docs:Z
+      - ${DATA_DIR}/wiki:/app-data:Z
     ports:
-      - ${WIKI_PORT}:8000
+      - ${WIKI_PORT}:80
     restart: always
-
