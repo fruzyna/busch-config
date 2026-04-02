@@ -49,7 +49,7 @@ services:
     container_name: wildrank
     env_file: secrets/wildrank.env
     environment:
-      - WR_WORKERS=15
+      - WR_WORKERS=10
     volumes:
       - ${CONFIG_DIR}/wildrank:/config:Z
     ports:
@@ -78,5 +78,16 @@ services:
       - ${CONFIG_DIR}/wildrank-dev:/config:Z
     ports:
       - ${WILDRANK_DEV_PORT}:80
+    restart: always
+
+  wildzone:
+    image: ${WS_REGISTRY}/wildzone:0.2
+    container_name: wildzone
+    environment:
+      - WZ_WORKERS=10
+    volumes:
+      - ${CONFIG_DIR}/wildzone:/app/config:Z
+    ports:
+      - ${WILDZONE_PORT}:80
     restart: always
 
