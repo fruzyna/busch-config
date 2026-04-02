@@ -64,6 +64,7 @@ services:
       - ./pages:/config/pages:Z
       - ${DATA_DIR}/nginx-logs:/config/log/nginx:Z
       - ${DATA_DIR}/fileserver:/config/fileserver:Z
+      - ${CONFIG_DIR}/letsencrypt:/config/etc/letsencrypt:Z
     ports:
       - 443:443
       - 80:80
