@@ -71,7 +71,7 @@ services:
     restart: always
 
   unifi-app:
-    image: ${LSIO_REGISTRY}/unifi-network-application
+    image: ${LSIO_REGISTRY}/unifi-network-application:10.1.89
     container_name: unifi-app
     env_file: secrets/unifi.env
     depends_on:
