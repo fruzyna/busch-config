@@ -81,7 +81,7 @@ services:
     restart: always
 
   wildzone:
-    image: ${WS_REGISTRY}/wildzone:0.2
+    image: ${WS_REGISTRY}/wildzone:0.4
     container_name: wildzone
     environment:
       - WZ_WORKERS=10
