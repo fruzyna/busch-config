@@ -45,7 +45,7 @@ services:
     restart: always
 
   wildrank:
-    image: ${WS_REGISTRY}/wildrank:5.1.4
+    image: ${WS_REGISTRY}/wildrank:5.2.0
     container_name: wildrank
     env_file: secrets/wildrank.env
     environment:
@@ -57,7 +57,7 @@ services:
     restart: always
 
   wildrank-test:
-    image: ${WS_REGISTRY}/wildrank:5.1.4
+    image: ${WS_REGISTRY}/wildrank:5.2.0
     container_name: wildrank-test
     env_file: secrets/wildrank.env
     environment:
@@ -68,20 +68,8 @@ services:
       - ${WILDRANK_TEST_PORT}:80
     restart: always
 
-  wildrank-dev:
-    image: ${WS_REGISTRY}/wildrank:5.1.4
-    container_name: wildrank-dev
-    env_file: secrets/wildrank.env
-    environment:
-      - WR_WORKERS=1
-    volumes:
-      - ${CONFIG_DIR}/wildrank-dev:/config:Z
-    ports:
-      - ${WILDRANK_DEV_PORT}:80
-    restart: always
-
   wildzone:
-    image: ${WS_REGISTRY}/wildzone:0.4
+    image: ${WS_REGISTRY}/wildzone:0.5
     container_name: wildzone
     environment:
       - WZ_WORKERS=10
