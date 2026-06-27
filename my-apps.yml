@@ -12,11 +12,15 @@ services:
   personal-site:
     image: ${MY_REGISTRY}/site
     container_name: personal-site
+    user: ${USER_ID}:${USER_ID}
+    userns_mode: keep-id
     volumes:
       - ${CONFIG_DIR}/personal-site/pages:/app/pages:Z
       - ${CONFIG_DIR}/personal-site/assets:/app/assets:Z
     ports:
       - ${PERSONAL_PORT}:8000
+    networks:
+      - personal
     restart: always
 
   races:
@@ -36,6 +40,8 @@ services:
       - ${CONFIG_DIR}/wildrank:/config:Z
     ports:
       - ${WILDRANK_PORT}:80
+    networks:
+      - wildrank
     restart: always
 
   wildrank-test:
@@ -48,6 +54,8 @@ services:
       - ${CONFIG_DIR}/wildrank-test:/config:Z
     ports:
       - ${WILDRANK_TEST_PORT}:80
+    networks:
+      - wildrank
     restart: always
 
   wildzone:
@@ -61,3 +69,10 @@ services:
       - ${WILDZONE_PORT}:80
     restart: always
 
+networks:
+
+  personal:
+    internal: true
+
+  wildrank:
+    internal: true
