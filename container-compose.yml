@@ -1,6 +1,5 @@
 include:
   - my-apps.yml
-  - services.yml
 
 services:
 

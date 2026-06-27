@@ -1,30 +1,5 @@
 services:
 
-  finance-app:
-    build: ./finance-v2
-    container_name: finance-app
-    command: ./install-and-start.sh
-    depends_on:
-      - finance-db
-    volumes:
-      - ./finance-v2:/app:Z
-    ports:
-      - ${FINANCE_PORT}:3000
-    restart: always
-
-  finance-db:
-    image: docker.io/mariadb
-    container_name: finance-db
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    env_file: secrets/finance.env
-    environment:
-      - MYSQL_DATABASE=finance-db
-      - MYSQL_USER=finance
-    volumes:
-      - ${DB_DIR}/finance:/var/lib/mysql:Z
-      - /etc/localtime:/etc/localtime:ro
-    restart: always
-
   metra:
     image: ${MY_REGISTRY}/metra
     container_name: metra
@@ -42,6 +17,13 @@ services:
       - ${CONFIG_DIR}/personal-site/assets:/app/assets:Z
     ports:
       - ${PERSONAL_PORT}:8000
+    restart: always
+
+  races:
+    image: ${MY_REGISTRY}/races
+    container_name: races
+    ports:
+      - ${RACES_PORT}:8000
     restart: always
 
   wildrank:
