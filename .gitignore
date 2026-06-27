@@ -3,3 +3,4 @@ nginx/*.*
 nginx/proxy-confs/
 *.sample
 !nginx/nginx.conf
+!nginx/ssl.conf
