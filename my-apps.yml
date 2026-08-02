@@ -15,8 +15,7 @@ services:
     user: ${USER_ID}:${USER_ID}
     userns_mode: keep-id
     volumes:
-      - ${CONFIG_DIR}/personal-site/pages:/app/pages:Z
-      - ${CONFIG_DIR}/personal-site/assets:/app/assets:Z
+      - ${CONFIG_DIR}/personal-site:/app/config:Z
     ports:
       - ${PERSONAL_PORT}:8000
     networks:
@@ -26,6 +25,8 @@ services:
   races:
     image: ${MY_REGISTRY}/races
     container_name: races
+    volumes:
+      - ${CONFIG_DIR}/races:/app/config:Z
     ports:
       - ${RACES_PORT}:8000
     restart: always
