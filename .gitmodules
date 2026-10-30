@@ -1,21 +1,3 @@
-[submodule "otd-calcs-web"]
-	path = pages/otd-calcs-web
-	url = https://github.com/fruzyna/otd-calcs-web
-[submodule "homepage"]
-	path = pages/homepage
-	url = https://github.com/fruzyna/homepage
-[submodule "personal-site"]
-	path = pages/personal-site
-	url = https://github.com/fruzyna/personal-site
-[submodule "robot_framework"]
-	path = pages/robot_framework
-	url = https://github.com/wildstang/robot_framework
-[submodule "finance-v2"]
-	path = finance-v2
-	url = https://github.com/fruzyna/finance-v2
-[submodule "status-page"]
-	path = pages/status-page
-	url = https://github.com/fruzyna/status-page
 [submodule "pages/homepage"]
 	path = pages/homepage
 	url = https://github.com/fruzyna/homepage
@@ -25,6 +7,3 @@
 [submodule "pages/robot_framework"]
 	path = pages/robot_framework
 	url = https://github.com/wildstang/robot_framework
-[submodule "pages/status-page"]
-	path = pages/status-page
-	url = https://github.com/fruzyna/status-page
