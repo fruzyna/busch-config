@@ -1,9 +1,3 @@
-[submodule "pages/homepage"]
-	path = pages/homepage
-	url = https://github.com/fruzyna/homepage
-[submodule "pages/otd-calcs-web"]
-	path = pages/otd-calcs-web
-	url = https://github.com/fruzyna/otd-calcs-web
-[submodule "pages/robot_framework"]
-	path = pages/robot_framework
-	url = https://github.com/wildstang/robot_framework
+[submodule "finance-v2"]
+	path = finance-v2
+	url = https://github.com/fruzyna/finance-v2

@@ -1,48 +1,149 @@
-include:
-  - my-apps.yml
-
 services:
 
-  ddclient-fruzyna:
+  ddclient-305a:
     image: ${LSIO_REGISTRY}/ddclient
-    container_name: ddclient-fruzyna
+    container_name: ddclient-305a
     environment:
       - PUID=${USER_ID}
       - PGID=${USER_ID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${CONFIG_DIR}/ddclient/fruzyna:/config:Z
+      - ${CONFIG_DIR}/ddclient/305a:/config:Z
     restart: always
 
-  ddclient-wildrank:
-    image: ${LSIO_REGISTRY}/ddclient
-    container_name: ddclient-wildrank
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${USER_ID}
-      - TZ=${TIMEZONE}
+  baikal:
+    image: docker.io/ckulka/baikal
+    container_name: baikal
     volumes:
-      - ${CONFIG_DIR}/ddclient/wildrank:/config:Z
+      - ${CONFIG_DIR}/baikal:/var/www/baikal/config:Z
+      - ${DB_DIR}/baikal:/var/www/baikal/Specific:Z
+    ports:
+      - ${BAIKAL_PORT}:80
+    networks:
+      - baikal
     restart: always
 
-  ddclient-wildzone:
-    image: ${LSIO_REGISTRY}/ddclient
-    container_name: ddclient-wildzone
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${USER_ID}
-      - TZ=${TIMEZONE}
+  finance-app:
+    build: ./finance-v2
+    container_name: finance-app
+    command: ./install-and-start.sh
+    depends_on:
+      - finance-db
+    user: 1000:1000
+    userns_mode: keep-id
     volumes:
-      - ${CONFIG_DIR}/ddclient/wildzone:/config:Z
+      - ./finance-v2:/app:Z
+    ports:
+      - ${FINANCE_PORT}:3000
+    networks:
+      - public
+      - finance
     restart: always
 
-  ddclient-wildstang:
-    image: ${LSIO_REGISTRY}/ddclient
-    container_name: ddclient-wildstang
+  finance-db:
+    image: docker.io/mariadb
+    container_name: finance-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    user: 1000:1000
+    userns_mode: keep-id
+    env_file: secrets/finance.env
+    environment:
+      - MYSQL_DATABASE=finance-db
+      - MYSQL_USER=finance
+    volumes:
+      - ${DB_DIR}/finance:/var/lib/mysql:Z
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - finance
+    restart: always
+
+  gitea:
+    image: docker.gitea.com/gitea
+    container_name: gitea
+    environment:
+      - USER_UID=${USER_ID}
+      - USER_GID=${USER_ID}
+    volumes:
+      - ${DB_DIR}/gitea:/data:Z
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - ${GITEA_PORT}:3000
+    restart: always
+
+  librespeed:
+    image: lscr.io/linuxserver/librespeed
+    container_name: librespeed
     environment:
       - PUID=${USER_ID}
       - PGID=${USER_ID}
       - TZ=${TIMEZONE}
-    volumes:
-      - ${CONFIG_DIR}/ddclient/wildstang:/config:Z
+    ports:
+      - ${SPEED_PORT}:80
+    networks:
+      - librespeed
     restart: always
+
+  miniflux-app:
+    image: docker.io/miniflux/miniflux
+    container_name: miniflux-app
+    depends_on:
+      - miniflux-db
+    user: 1000:1000
+    userns_mode: keep-id
+    env_file: secrets/miniflux.env
+    environment:
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=admin
+    ports:
+      - ${MINIFLUX_PORT}:8080
+    networks:
+      - public
+      - miniflux
+    restart: always
+
+  miniflux-db:
+    image: docker.io/postgres:15-alpine
+    container_name: miniflux-db
+    user: 1000:1000
+    userns_mode: keep-id
+    env_file: secrets/miniflux.env
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_DB=miniflux
+    volumes:
+      - ${DB_DIR}/miniflux:/var/lib/postgresql/data:Z
+    networks:
+      - miniflux
+    restart: always
+
+  wiki:
+    image: docker.io/redimp/otterwiki:2
+    container_name: wiki
+    volumes:
+      - ${DB_DIR}/wiki:/app-data:Z
+    ports:
+      - ${WIKI_PORT}:80
+    networks:
+      - wiki
+    restart: always
+
+networks:
+
+  public:
+
+  baikal:
+    internal: true
+
+  librespeed:
+    internal: true
+
+  miniflux:
+    internal: true
+
+  finance:
+    internal: true
+
+  wiki:
+    internal: true
+

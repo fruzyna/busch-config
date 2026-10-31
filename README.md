@@ -1,6 +1,6 @@
 # BUSCH Config
 
-podman-compose files, scripts, and resources for BUSCH, my web server.
+podman-compose files, scripts, and resources for BUSCH, my local web server.
 
 ## Specs
 
