@@ -18,15 +18,3 @@ services:
       - 443:443
       - 80:80
     restart: always
-
-  cups:
-    build: ./cups
-    container_name: cups
-    privileged: true
-    volumes:
-      - ${CONFIG_DIR}/cups:/etc/cups:Z
-      - /var/run/dbus:/var/run/dbus:Z,ro
-      - /dev/bus/usb/001:/dev/bus/usb/001:Z
-    ports:
-      - 631:631
-    restart: always
