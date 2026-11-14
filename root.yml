@@ -11,6 +11,9 @@ services:
       - PGID=${USER_ID}
       - TZ=${TIMEZONE}
       - VALIDATION=http
+      - URL=fruzyna.net
+      - SUBDOMAINS=home,homepage,liam,metra,otd,races,rss,www
+      - EXTRA_DOMAINS=docs.wildstang.dev,zone.wildstang.dev,frcwild.zone,2026.wildrank.app,test.wildrank.app
     volumes:
       - ./nginx:/config/nginx:Z
       - ./pages:/config/pages:Z
