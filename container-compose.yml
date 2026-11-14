@@ -46,3 +46,44 @@ services:
     volumes:
       - ${CONFIG_DIR}/ddclient/wildstang:/config:Z
     restart: always
+
+  miniflux-app:
+    image: docker.io/miniflux/miniflux
+    container_name: miniflux-app
+    depends_on:
+      - miniflux-db
+    user: ${USER_ID}:${USER_ID}
+    userns_mode: keep-id
+    env_file: secrets/miniflux.env
+    environment:
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=admin
+    ports:
+      - ${MINIFLUX_PORT}:8080
+    networks:
+      - public
+      - miniflux
+    restart: always
+
+  miniflux-db:
+    image: docker.io/postgres:15-alpine
+    container_name: miniflux-db
+    user: ${USER_ID}:${USER_ID}
+    userns_mode: keep-id
+    env_file: secrets/miniflux.env
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_DB=miniflux
+    volumes:
+      - ${DB_DIR}/miniflux:/var/lib/postgresql/data:Z
+    networks:
+      - miniflux
+    restart: always
+
+networks:
+
+  public:
+
+  miniflux:
+    internal: true
