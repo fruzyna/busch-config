@@ -10,13 +10,15 @@ services:
       - PUID=${USER_ID}
       - PGID=${USER_ID}
       - TZ=${TIMEZONE}
-      - VALIDATION=http
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+      - URL=305a.net
+      - SUBDOMAINS=dav,finance,git,speed,stream,wiki
     volumes:
       - ./nginx:/config/nginx:Z
       - ./pages:/config/pages:Z
     ports:
       - 443:443
-      - 80:80
     restart: always
 
   cups:
